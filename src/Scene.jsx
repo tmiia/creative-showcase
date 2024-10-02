@@ -90,7 +90,7 @@ function Scene() {
               />
             </EffectComposer>
           </Canvas>
-          <span className="absolute top-2/4 left-2/4 transform -translate-x-1/2 -translate-y-1/2">You've just entered my mind</span>
+          <span className="text-center absolute top-2/4 left-2/4 transform -translate-x-1/2 -translate-y-1/2">You've just entered my mind</span>
         </>
       ),
       trigger: "special",
@@ -146,9 +146,9 @@ function Scene() {
 
   useEffect(() => {
     const handleTrigger = (event) => {
-      if (scenes[currentScene].trigger === "click" && event.type === "click") {
+      if (scenes[currentScene].trigger === "click" && (event.type === "click" || event.type === "touchstart")) {
         handleNextScene();
-      } else if (scenes[currentScene].trigger === "keypress" && event.type === "keypress") {
+      } else if (scenes[currentScene].trigger === "keypress" && (event.type === "keypress" || event.type === "touchstart")) {
         handleNextScene();
       }
     };
@@ -156,8 +156,10 @@ function Scene() {
     if (sceneRef.current) {
       if (scenes[currentScene].trigger === "click") {
         sceneRef.current.addEventListener("click", handleTrigger);
+        sceneRef.current.addEventListener("touchstart", handleTrigger);
       } else if (scenes[currentScene].trigger === "keypress") {
         window.addEventListener("keypress", handleTrigger);
+        window.addEventListener("touchstart", handleTrigger);
       }
       else if (scenes[currentScene].trigger === "special") {
         setTimeout(() => {
@@ -173,10 +175,13 @@ function Scene() {
     return () => {
       if (sceneRef.current) {
         sceneRef.current.removeEventListener("click", handleTrigger);
+        sceneRef.current.removeEventListener("touchstart", handleTrigger);
       }
       window.removeEventListener("keypress", handleTrigger);
+      window.removeEventListener("touchstart", handleTrigger);
     };
   }, [currentScene]);
+
 
   const handleNextScene = () => {
     if (currentScene < scenes.length - 1) {
