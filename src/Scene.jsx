@@ -16,8 +16,8 @@ function Scene() {
     {
       content: (
         <>
-          <span>This is a sound experience.</span>
-          <span>Click to start.</span>
+          <span>An experience with sound.</span>
+          <span>Click to continue</span>
         </>
       ),
       animation: () => {gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });},
