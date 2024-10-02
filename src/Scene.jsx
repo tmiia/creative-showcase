@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from "@react-three/drei";
 import Cyl from "./Cyl"
+import Plane from "./Plane"
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
 function Scene() {
@@ -16,7 +17,7 @@ function Scene() {
       content: (
         <>
           <span>This is a sound experience.</span>
-          <span>Click to continue.</span>
+          <span>Click to start.</span>
         </>
       ),
       animation: () => {gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });},
@@ -75,9 +76,27 @@ function Scene() {
       animation: () => {gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });},
     },
     {
-      content: <span>You've just entered my mind</span>,
+      content: (
+        <>
+          <Canvas className="scene relative" flat camera={{ fov: 35 }}>
+            <ambientLight />
+            <Plane />
+            <EffectComposer>
+              <Bloom
+                mipmapBlur
+                intensity={6}
+                luminanceThreshold={0}
+                luminanceSmoothing={0}
+              />
+            </EffectComposer>
+          </Canvas>
+          <span className="absolute top-2/4 left-2/4 transform -translate-x-1/2 -translate-y-1/2">You've just entered my mind</span>
+        </>
+      ),
       trigger: "special",
-      animation: () => {gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });},
+      animation: () => {
+        gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });
+      },
     },
     {
       content: (
@@ -99,6 +118,7 @@ function Scene() {
       animation: () => {
 
         gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });
+
         const container = document.querySelector('.trigger').parentElement;
         container.classList.add('fit-content');
 
