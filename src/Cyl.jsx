@@ -7,17 +7,9 @@ import { gsap } from "gsap";
 const Cyl = forwardRef((props, ref) => {
   const texture = useTexture("./projects.png");
 
-  //     gsap.set(ref.current.position, { x: -10, y: 5, z: -10});
-  //     const tl = gsap.timeline({
-  //       duration: 1,
-  //     });
-
-  //     tl.to(ref.current.position, { x: 5, y: 5, z: -15})
-  //       .to(ref.current.position, { x: 8, y: 0, z: -10}, '-=0.15')
-  //       .to(ref.current.position, { x: 0, y: 0, z: 0}, '-=0.15');
-
   useEffect(() => {
     if (ref.current) {
+      gsap.set(ref.current.position, { x: -10, y: 0, z: -4});
       const tl = gsap.timeline({
         onUpdate: () => {
           const x = -4 * Math.cos(tl.progress() * Math.PI * 0.5);
