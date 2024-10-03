@@ -114,6 +114,9 @@ function Scene({ onLoaded, texture }) {
             <span>But who am I ?</span>
           </div>
           <div className="folder">
+            <span>Nehémia Telusma</span>
+          </div>
+          <div className="folder">
             <span>a creative developer</span>
           </div>
           <div className="folder">
