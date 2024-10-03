@@ -30,7 +30,6 @@ function Scene({ onLoaded, texture }) {
           <span>Click to continue</span>
         </>
       ),
-      animation: () => {gsap.fromTo(sceneRef.current, { opacity: 0 }, { opacity: 1, duration: 1 });},
       trigger: "click",
     },
     {
