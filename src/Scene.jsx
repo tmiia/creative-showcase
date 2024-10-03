@@ -147,6 +147,7 @@ function Scene({ onLoaded, texture }) {
           });
         });
 
+
       },
     },
   ];
@@ -199,17 +200,11 @@ function Scene({ onLoaded, texture }) {
   };
 
   return (
-    <div className="scene-container">
-      {scenes.map((scene, index) => (
-        <div
-          key={index}
-          className={`scene ${currentScene === index ? 'flex' : 'hidden'}`}
-          ref={index === currentScene ? sceneRef : null}
-          style={{ display: currentScene === index ? 'flex' : 'none' }}
-        >
-          {scene.content}
-        </div>
-      ))}
+    <div
+      className="scene"
+      ref={sceneRef}
+    >
+      {scenes[currentScene].content}
     </div>
   );
 
