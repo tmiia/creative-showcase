@@ -2,15 +2,25 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from "@react-three/drei";
+import { useProgress } from "@react-three/drei";
 import Cyl from "./Cyl"
 import Plane from "./Plane"
 import { Bloom, EffectComposer } from '@react-three/postprocessing'
 
-function Scene() {
+function Scene({ onLoaded, texture }) {
+  const { progress } = useProgress();
+
   const [currentScene, setCurrentScene] = useState(0);
   const cylRef = useRef(null);
   gsap.registerPlugin(ScrollTrigger);
+
+  useEffect(() => {
+    if (progress === 100) {
+      if (onLoaded) {
+        onLoaded();
+      }
+    }
+  }, [progress, onLoaded]);
 
   const scenes = [
     {
@@ -60,7 +70,7 @@ function Scene() {
         <>
           <Canvas className="scene" flat camera={{ fov: 35 }}>
             <ambientLight />
-            <Cyl ref={cylRef} />
+            <Cyl texture={texture} ref={cylRef} />
             <EffectComposer>
               <Bloom
                 mipmapBlur
@@ -80,7 +90,7 @@ function Scene() {
         <>
           <Canvas className="scene relative" flat camera={{ fov: 35 }}>
             <ambientLight />
-            <Plane />
+            <Plane texture={texture} />
             <EffectComposer>
               <Bloom
                 mipmapBlur
@@ -190,13 +200,20 @@ function Scene() {
   };
 
   return (
-    <div
-      className="scene"
-      ref={sceneRef}
-    >
-      {scenes[currentScene].content}
+    <div className="scene-container">
+      {scenes.map((scene, index) => (
+        <div
+          key={index}
+          className={`scene ${currentScene === index ? 'flex' : 'hidden'}`}
+          ref={index === currentScene ? sceneRef : null}
+          style={{ display: currentScene === index ? 'flex' : 'none' }}
+        >
+          {scene.content}
+        </div>
+      ))}
     </div>
   );
+
 }
 
 export default Scene

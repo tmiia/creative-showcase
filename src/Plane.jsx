@@ -1,10 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { gsap } from "gsap";
 
-function Plane() {
-  const texture = useTexture("./projects.png");
+function Plane({ texture }) {
   const meshRef = useRef();
 
   useEffect(() => {

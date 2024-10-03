@@ -1,12 +1,10 @@
 import React, { forwardRef, useEffect } from 'react';
-import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { gsap } from "gsap";
+import useTextures from './useTextures';
 
-const Cyl = forwardRef((props, ref) => {
-  const texture = useTexture("./projects.png");
-
+const Cyl = forwardRef(({ texture }, ref) => {
   useEffect(() => {
     if (ref.current) {
       gsap.set(ref.current.position, { x: -10, y: 0, z: -4});
